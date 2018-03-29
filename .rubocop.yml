@@ -1,0 +1,17 @@
+AllCops:
+  Exclude:
+    - config/*
+    - config/*/*.rb
+    - bin/*
+    - db/seeds.rb
+    - spec/spec_helper.rb
+    - spec/rails_helper.rb
+
+Metrics/LineLength:
+  Max: 95
+
+MethodLength:
+  Max: 35
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
