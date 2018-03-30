@@ -3,7 +3,7 @@ AllCops:
     - config/*
     - config/*/*.rb
     - bin/*
-    - db/seeds.rb
+    - db/**/*
     - spec/spec_helper.rb
     - spec/rails_helper.rb
 
