@@ -6,12 +6,13 @@ AllCops:
     - db/**/*
     - spec/spec_helper.rb
     - spec/rails_helper.rb
-
 Metrics/LineLength:
   Max: 95
-
 MethodLength:
   Max: 35
-
+Metrics/BlockLength:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false

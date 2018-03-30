@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+
+  auth:
+    invalid_credentials: "Invalid credentials"

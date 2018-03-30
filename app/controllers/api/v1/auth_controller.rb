@@ -4,21 +4,19 @@ module Api
       def create
         user = User.find_by(email: user_params[:email])
 
-        if user && user.valid_password?(user_params[:password])
-          render json: {
-            token: 'token'
-          }
+        if user&.valid_password?(user_params[:password])
+          render json: { token: Auth::JWTEncode.call(user_id: user.id) }
         else
           render json: {
-            token: nil
-          }, status: 401
+            token: nil,
+            error: I18n.t('auth.invalid_credentials')
+          }, status: 403
         end
       end
 
       def user_params
         params.permit(:email, :password)
       end
-
     end
   end
 end
