@@ -1,4 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+SimpleCov.start
+
 require 'spec_helper'
 require 'support/factory_bot'
 require 'support/api_helper'
