@@ -76,7 +76,10 @@ describe '/api/v1/tasks', type: :api do
         end
 
         it 'has correct payload' do
-          expect(json['description']).to eq(task.description)
+          expect(json).to include(
+            'description' => task.description,
+            'status' => task.status
+          ).and(include('created_at', 'updated_at'))
         end
       end
 
@@ -104,7 +107,10 @@ describe '/api/v1/tasks', type: :api do
         end
 
         it 'has correct payload' do
-          expect(json['description']).to eq(task.description)
+          expect(json).to include(
+            'description' => task.description,
+            'status' => task.status
+          ).and(include('created_at', 'updated_at'))
         end
 
         it 'deletes successfully' do

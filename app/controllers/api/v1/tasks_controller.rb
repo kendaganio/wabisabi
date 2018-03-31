@@ -34,6 +34,7 @@ module Api
       end
 
       private
+
       def task_params
         params.permit(:description)
       end
