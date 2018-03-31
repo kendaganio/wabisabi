@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe '/api/v1/auth', type: :api do
-  let(:headers) { { 'ACCEPT' => 'application/json' } }
-
   describe 'POST /' do
     context 'valid user' do
       before do

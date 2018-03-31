@@ -10,6 +10,11 @@ module ApiHelper
   def json
     JSON.parse(last_response.body)
   end
+
+  def auth_header(user)
+    token = Auth::JWTEncode.call(user_id: user.id)
+    "Bearer #{token}"
+  end
 end
 
 RSpec.configure do |config|

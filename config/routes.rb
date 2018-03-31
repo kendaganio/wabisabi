@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :auth
       resources :ping, only: [:index]
+      resources :tasks
     end
   end
 end

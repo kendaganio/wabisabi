@@ -10,7 +10,7 @@ module Api
           render json: {
             token: nil,
             error: I18n.t('auth.invalid_credentials')
-          }, status: 403
+          }, status: :forbidden
         end
       end
 
