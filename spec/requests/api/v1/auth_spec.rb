@@ -4,7 +4,7 @@ describe '/api/v1/auth', type: :api do
   describe 'POST /' do
     context 'valid user' do
       before do
-        create(:test_user)
+        create(:user)
         post '/api/v1/auth', email: 'login@mailinator.com', password: 'loginpass'
       end
 

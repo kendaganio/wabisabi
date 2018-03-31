@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe '/api/v1/ping', type: :api do
-  let(:test_user) { create(:test_user) }
+  let(:user) { create(:user) }
 
   describe 'GET /' do
     context 'unauthenticated user' do
@@ -16,7 +16,7 @@ describe '/api/v1/ping', type: :api do
 
     context 'invalid jwt' do
       before do
-        payload = { user_id: test_user.id }
+        payload = { user_id: user.id }
         token = Auth::JWTEncode.call(payload)
         token = token.slice(1, token.length)
 
@@ -31,7 +31,7 @@ describe '/api/v1/ping', type: :api do
 
     context 'authenticated user' do
       before do
-        payload = { user_id: test_user.id }
+        payload = { user_id: user.id }
         token = Auth::JWTEncode.call(payload)
 
         header 'Authorization', "Bearer #{token}"
