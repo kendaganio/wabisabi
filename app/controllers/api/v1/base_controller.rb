@@ -16,6 +16,14 @@ module Api
           errors: errors
         }, status: :unprocessable_entity
       end
+
+      def forbidden(error = nil)
+        error ||= I18n.t('auth.invalid_credentials')
+        render json: {
+          token: nil,
+          error: error
+        }, status: :forbidden
+      end
     end
   end
 end

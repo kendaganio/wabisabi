@@ -1,6 +1,6 @@
 module Api
   module V1
-    class PingController < ActionController::API
+    class PingController < BaseController
       before_action :authenticate_user!
 
       def index
