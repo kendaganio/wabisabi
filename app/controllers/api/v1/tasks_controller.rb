@@ -12,7 +12,7 @@ module Api
         if task.save
           render json: task.attributes
         else
-          unprocessable_entity task.errors.full_messages
+          render unprocessable_entity(task.errors.full_messages)
         end
       end
 
@@ -20,7 +20,7 @@ module Api
         task = find_task
         render json: task.attributes
       rescue ActiveRecord::RecordNotFound
-        not_found
+        render not_found
       end
 
       def destroy
@@ -29,7 +29,7 @@ module Api
 
         render json: task.attributes
       rescue ActiveRecord::RecordNotFound
-        not_found
+        render not_found
       end
 
       private

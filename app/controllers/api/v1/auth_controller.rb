@@ -7,7 +7,7 @@ module Api
         if user&.valid_password?(user_params[:password])
           render json: { token: Auth::JWTEncode.call(user_id: user.id) }
         else
-          forbidden
+          render forbidden
         end
       end
 
