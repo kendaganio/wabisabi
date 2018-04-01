@@ -91,6 +91,10 @@ describe '/api/v1/tasks', type: :api do
         it 'responds with 404 - not found' do
           expect(last_response.status).to eq(404)
         end
+
+        it 'has correct message' do
+          expect(json['errors']).to include(I18n.t('api.not_found'))
+        end
       end
     end
 
@@ -125,6 +129,10 @@ describe '/api/v1/tasks', type: :api do
 
         it 'responds with 404 - not found' do
           expect(last_response.status).to eq(404)
+        end
+
+        it 'has correct message' do
+          expect(json['errors']).to include(I18n.t('api.not_found'))
         end
       end
     end

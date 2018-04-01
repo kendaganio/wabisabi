@@ -34,3 +34,7 @@ en:
 
   auth:
     invalid_credentials: "Invalid credentials"
+
+  api:
+    not_found: "Record not found."
+    unprocessable_entity: "Unprocessable Entity"

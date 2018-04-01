@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TasksController < ActionController::API
+    class TasksController < BaseController
       before_action :authenticate_user!
 
       def index
@@ -12,9 +12,7 @@ module Api
         if task.save
           render json: task.attributes
         else
-          render json: {
-            errors: task.errors.full_messages
-          }, status: :unprocessable_entity
+          unprocessable_entity task.errors.full_messages
         end
       end
 
@@ -28,6 +26,7 @@ module Api
       def destroy
         task = find_task
         task.destroy
+
         render json: task.attributes
       rescue ActiveRecord::RecordNotFound
         not_found
@@ -41,10 +40,6 @@ module Api
 
       def find_task
         current_user.tasks.find(params[:id])
-      end
-
-      def not_found
-        render json: { errors: ['not found'] }, status: :not_found
       end
     end
   end
