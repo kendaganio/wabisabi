@@ -25,7 +25,7 @@ describe '/api/v1/tasks', type: :api do
       end
 
       it 'has correct items' do
-        expect(json['tasks'].length).to eq(task_list.length)
+        expect(json['data'].length).to eq(task_list.length)
       end
     end
 
@@ -76,7 +76,7 @@ describe '/api/v1/tasks', type: :api do
         end
 
         it 'has correct payload' do
-          expect(json).to include(
+          expect(json['data']['attributes']).to include(
             'description' => task.description,
             'status' => task.status
           ).and(include('created_at', 'updated_at'))
@@ -111,7 +111,7 @@ describe '/api/v1/tasks', type: :api do
         end
 
         it 'has correct payload' do
-          expect(json).to include(
+          expect(json['data']['attributes']).to include(
             'description' => task.description,
             'status' => task.status
           ).and(include('created_at', 'updated_at'))

@@ -4,7 +4,7 @@ module Api
       before_action :authenticate_user!
 
       def index
-        render json: { tasks: current_user.tasks }
+        render json: TaskSerializer.new(current_user.tasks)
       end
 
       def create
@@ -18,7 +18,7 @@ module Api
 
       def show
         task = find_task
-        render json: task.attributes
+        render json: TaskSerializer.new(task)
       rescue ActiveRecord::RecordNotFound
         render not_found
       end
@@ -27,7 +27,7 @@ module Api
         task = find_task
         task.destroy
 
-        render json: task.attributes
+        render json: TaskSerializer.new(task)
       rescue ActiveRecord::RecordNotFound
         render not_found
       end
