@@ -1,1 +1,2 @@
 # wabisabi &middot; [![Maintainability](https://api.codeclimate.com/v1/badges/ec6b55ac08a621d02548/maintainability)](https://codeclimate.com/github/kendaganio/wabisabi/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/ec6b55ac08a621d02548/test_coverage)](https://codeclimate.com/github/kendaganio/wabisabi/test_coverage) [![Build Status](https://travis-ci.org/kendaganio/wabisabi.svg?branch=master)](https://travis-ci.org/kendaganio/wabisabi)
+> imperfect, impermanent, and incomplete
