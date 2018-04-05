@@ -1,6 +1,8 @@
 module Api
   module V1
     class BaseController < ActionController::API
+      before_action :authenticate_user!
+
       private
 
       def not_found(errors = nil)

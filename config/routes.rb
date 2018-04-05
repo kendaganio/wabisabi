@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :auth
       resources :ping, only: [:index]
       resources :tasks
+      resources :lists
     end
   end
 end

@@ -1,7 +1,6 @@
 module Api
   module V1
     class TasksController < BaseController
-      before_action :authenticate_user!
 
       def index
         render json: TaskSerializer.new(current_user.tasks)
