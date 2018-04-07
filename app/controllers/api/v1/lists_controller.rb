@@ -7,12 +7,15 @@ module Api
       end
 
       def create
+        render json: {}
       end
 
       def show
+        render json: {}
       end
 
       def destroy
+        render json: {}
       end
 
     end
