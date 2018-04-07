@@ -3,6 +3,7 @@ module Api
     class ListsController < BaseController
 
       def index
+        render json: {}
       end
 
       def create

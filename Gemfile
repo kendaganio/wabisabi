@@ -25,6 +25,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'rspec-rails'
+  gem 'guard-rspec'
 end
 
 group :development do
