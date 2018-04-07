@@ -9,7 +9,7 @@ module Api
       def create
         task = current_user.tasks.new(task_params)
         if task.save
-          render json: task.attributes
+          render json: TaskSerializer.new(task)
         else
           render unprocessable_entity(task.errors.full_messages)
         end

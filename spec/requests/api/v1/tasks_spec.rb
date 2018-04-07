@@ -2,10 +2,9 @@ require 'rails_helper'
 
 describe '/api/v1/tasks', type: :api do
   let(:user) { create(:user) }
+  let(:list) { create(:list, user: user) }
   let(:new_task) do
-    {
-      'description' => 'new task'
-    }
+    { 'description' => 'new task' }
   end
 
   context 'authenticated user' do
@@ -14,7 +13,7 @@ describe '/api/v1/tasks', type: :api do
     end
 
     describe 'GET /' do
-      let!(:task_list) { create_list(:task, 2, description: 'task', user: user) }
+      let!(:task_list) { create_list(:task, 2, description: 'task', user: user, list: list) }
 
       before do
         get '/api/v1/tasks'
@@ -40,7 +39,9 @@ describe '/api/v1/tasks', type: :api do
         end
 
         it 'has the correct payload' do
-          expect(json.key?('id')).to be_truthy
+          expect(json['data']['attributes']).to include(
+            'description' => new_task['description']
+          ).and(include('created_at', 'updated_at'))
         end
 
         it 'belongs to current_user' do
@@ -64,7 +65,7 @@ describe '/api/v1/tasks', type: :api do
     end
 
     describe 'GET /:id' do
-      let(:task) { create :task, user: user }
+      let(:task) { create :task, user: user, list: list }
 
       context 'hit' do
         before do
@@ -99,7 +100,7 @@ describe '/api/v1/tasks', type: :api do
     end
 
     describe 'DELETE /:id' do
-      let(:task) { create :task, user: user }
+      let(:task) { create :task, user: user, list: list }
 
       context 'hit' do
         before do
