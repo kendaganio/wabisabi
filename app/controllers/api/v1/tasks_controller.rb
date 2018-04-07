@@ -1,7 +1,6 @@
 module Api
   module V1
     class TasksController < BaseController
-
       def index
         render json: TaskSerializer.new(current_user.tasks)
       end

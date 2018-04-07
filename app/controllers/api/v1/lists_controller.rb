@@ -1,7 +1,6 @@
 module Api
   module V1
     class ListsController < BaseController
-
       def index
         render json: ListSerializer.new(current_user.lists)
       end
@@ -22,7 +21,6 @@ module Api
       def destroy
         render json: {}
       end
-
 
       private
 

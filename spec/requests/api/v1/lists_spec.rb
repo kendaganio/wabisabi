@@ -97,7 +97,6 @@ describe '/api/v1/lists', type: :api do
         it 'has correct error message'
       end
     end
-
   end
 
   context 'unauthenticated user' do
