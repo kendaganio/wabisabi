@@ -1,10 +1,9 @@
 require 'rails_helper'
+require_relative './api_shared_examples'
 
 describe '/api/v1/lists', type: :api do
   let(:user) { create(:user) }
-  let(:new_list) do
-    { 'name' => 'new list' }
-  end
+  let(:new_list) { {'name' => 'new_list'} }
 
   context 'authenticated user' do
     before do
@@ -12,18 +11,16 @@ describe '/api/v1/lists', type: :api do
     end
 
     describe 'GET /' do
-      let!(:lists) { create_list(:list, 2, user: user) }
+      let!(:collection) { create_list(:list, 2, user: user) }
 
       before do
         get '/api/v1/lists'
       end
 
-      it 'responds with 200 - ok' do
-        expect(last_response.status).to eq(200)
-      end
+      it_behaves_like 'a valid api request'
 
       it 'has correct items' do
-        expect(json['data'].length).to eq(lists.length)
+        expect(json['data'].length).to eq(collection.length)
       end
     end
 
@@ -33,14 +30,9 @@ describe '/api/v1/lists', type: :api do
           post '/api/v1/lists', new_list
         end
 
-        it 'responds with 200 - ok' do
-          expect(last_response.status).to eq(200)
-        end
-
-        it 'has correct payload' do
-          expect(json['data']['attributes']).to include(
-            'name' => new_list['name']
-          ).and(include('created_at', 'updated_at'))
+        it_behaves_like 'a valid api request'
+        it_behaves_like 'a correct payload' do
+          let(:payload) { new_list }
         end
 
         it 'belongs to current user' do
@@ -53,13 +45,7 @@ describe '/api/v1/lists', type: :api do
           post '/api/v1/lists', {}
         end
 
-        it 'responds with 422 - unprocessable entity' do
-          expect(last_response.status).to eq(422)
-        end
-
-        it 'has error in the payload' do
-          expect(json.key?('errors')).to be_truthy
-        end
+        it_behaves_like 'an invalid api request'
       end
     end
 
@@ -71,12 +57,9 @@ describe '/api/v1/lists', type: :api do
           get "/api/v1/lists/#{list.id}"
         end
 
-        it 'responds with 200 - ok' do
-          expect(last_response.status).to eq(200)
-        end
-
-        it 'has correct payload' do
-          expect(json['data']['attributes']).to include('name' => list.name)
+        it_behaves_like 'a valid api request'
+        it_behaves_like 'a correct payload' do
+          let(:payload) {{ 'name' => list.name }}
         end
       end
 
@@ -85,30 +68,21 @@ describe '/api/v1/lists', type: :api do
           get '/api/v1/lists/9999'
         end
 
-        it 'responds with 404 - not found' do
-          expect(last_response.status).to eq(404)
-        end
-
-        it 'has correct message' do
-          expect(json['errors']).to include(/not found/)
-        end
+        it_behaves_like 'a resource was not found'
       end
     end
 
     describe 'DELETE /:id' do
-      let(:list) { create(:list, user: user) }
+      let(:list) { create(:list, name: 'to delete', user: user) }
 
       context 'hit' do
         before do
           delete "/api/v1/lists/#{list.id}"
         end
 
-        it 'responds with 200 - ok' do
-          expect(last_response.status).to eq(200)
-        end
-
-        it 'has correct payload' do
-          expect(json['data']['attributes']).to include('name' => list.name)
+        it_behaves_like 'a valid api request'
+        it_behaves_like 'a correct payload' do
+          let(:payload) {{ 'name' => 'to delete' }}
         end
 
         it 'deletes successfully' do
@@ -118,47 +92,13 @@ describe '/api/v1/lists', type: :api do
 
       context 'miss' do
         before do
-          delete 'api/v1/lists/9999'
+          delete '/api/v1/lists/9999'
         end
 
-        it 'responds with 404 - not found' do
-          expect(last_response.status).to eq(404)
-        end
-
-        it 'has correct error message' do
-          expect(json['errors']).to include(/not found/)
-        end
+        it_behaves_like 'a resource was not found'
       end
     end
   end
 
-  context 'unauthenticated user' do
-    describe 'GET /' do
-      it 'responds with 401 - unauthorized' do
-        get '/api/v1/lists', new_list
-        expect(last_response.status).to eq(401)
-      end
-    end
-
-    describe 'POST /' do
-      it 'responds with 401 - unauthorized' do
-        post '/api/v1/lists', {}
-        expect(last_response.status).to eq(401)
-      end
-    end
-
-    describe 'GET /:id' do
-      it 'responds with 401 - unauthorized' do
-        get '/api/v1/lists/1'
-        expect(last_response.status).to eq(401)
-      end
-    end
-
-    describe 'DELETE /:id' do
-      it 'responds with 401 - unauthorized' do
-        delete '/api/v1/lists/1'
-        expect(last_response.status).to eq(401)
-      end
-    end
-  end
+  it_behaves_like 'an unauthenticated endpoint', '/api/v1/lists'
 end
