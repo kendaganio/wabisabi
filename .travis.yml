@@ -2,8 +2,9 @@ env:
   global:
     - CC_TEST_REPORTER_ID=e731635e6eb92d8175a2cbb3a0efa1a4e6d3a443f6327805e56ae47cb265a410
 language: ruby
+cache: bundler
 rvm:
-  - 2.4.0
+  - 2.5.1
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
