@@ -43,7 +43,9 @@ describe '/api/v1/lists', type: :api do
           ).and(include('created_at', 'updated_at'))
         end
 
-        it 'belongs to current user'
+        it 'belongs to current user' do
+          expect(user.lists.count).to eq(1)
+        end
       end
 
       context 'incomplete params' do
@@ -55,46 +57,77 @@ describe '/api/v1/lists', type: :api do
           expect(last_response.status).to eq(422)
         end
 
-        it 'has error in the payload'
+        it 'has error in the payload' do
+          expect(json.key?('errors')).to be_truthy
+        end
       end
     end
 
     describe 'GET /:id' do
+      let(:list) { create(:list, user: user) }
+
       context 'hit' do
         before do
-          get '/api/v1/lists/1'
+          get "/api/v1/lists/#{list.id}"
         end
 
         it 'responds with 200 - ok' do
           expect(last_response.status).to eq(200)
         end
 
-        it 'has correct payload'
+        it 'has correct payload' do
+          expect(json['data']['attributes']).to include('name' => list.name)
+        end
       end
 
       context 'miss' do
-        it 'responds with 404 - not found'
-        it 'has correct message'
+        before do
+          get '/api/v1/lists/9999'
+        end
+
+        it 'responds with 404 - not found' do
+          expect(last_response.status).to eq(404)
+        end
+
+        it 'has correct message' do
+          expect(json['errors']).to include(/not found/)
+        end
       end
     end
 
     describe 'DELETE /:id' do
+      let(:list) { create(:list, user: user) }
+
       context 'hit' do
         before do
-          delete '/api/v1/lists/1'
+          delete "/api/v1/lists/#{list.id}"
         end
 
         it 'responds with 200 - ok' do
           expect(last_response.status).to eq(200)
         end
 
-        it 'has correct payload'
-        it 'deletes successfully'
+        it 'has correct payload' do
+          expect(json['data']['attributes']).to include('name' => list.name)
+        end
+
+        it 'deletes successfully' do
+          expect(user.lists.count).to eq(0)
+        end
       end
 
       context 'miss' do
-        it 'responds with 404 - not found'
-        it 'has correct error message'
+        before do
+          delete 'api/v1/lists/9999'
+        end
+
+        it 'responds with 404 - not found' do
+          expect(last_response.status).to eq(404)
+        end
+
+        it 'has correct error message' do
+          expect(json['errors']).to include(/not found/)
+        end
       end
     end
   end

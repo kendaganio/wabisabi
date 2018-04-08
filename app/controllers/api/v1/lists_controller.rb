@@ -15,14 +15,26 @@ module Api
       end
 
       def show
-        render json: {}
+        list = find_list
+        render json: ListSerializer.new(list)
+      rescue ActiveRecord::RecordNotFound
+        render not_found
       end
 
       def destroy
-        render json: {}
+        list = find_list
+        list.destroy
+
+        render json: ListSerializer.new(list)
+      rescue ActiveRecord::RecordNotFound
+        render not_found
       end
 
       private
+
+      def find_list
+        current_user.lists.find(params[:id])
+      end
 
       def list_params
         params.permit(:name)
