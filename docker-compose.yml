@@ -1,0 +1,21 @@
+version: '3'
+services: 
+  db:
+    image: postgres
+    volumes: 
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    image: wabisabi
+    command: bundle exec rails s
+    volumes: 
+      - .:/wabisabi
+    environment:
+      WABISABI_PG_USERNAME: postgres
+      WABISABI_PG_PASSWORD: ''
+      WABISABI_PG_HOST: 'db'
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+
