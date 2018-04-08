@@ -32,7 +32,7 @@ shared_examples 'a resource was not found' do
 end
 
 shared_examples 'an unauthenticated endpoint' do |endpoint|
-  describe "GET #{endpoint}"  do
+  describe "GET #{endpoint}" do
     it 'responds with 401 - unauthorized' do
       get endpoint
       expect(last_response.status).to eq(401)

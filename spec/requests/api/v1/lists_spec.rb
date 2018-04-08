@@ -3,7 +3,7 @@ require_relative './api_shared_examples'
 
 describe '/api/v1/lists', type: :api do
   let(:user) { create(:user) }
-  let(:new_list) { {'name' => 'new_list'} }
+  let(:new_list) { { 'name' => 'new_list' } }
 
   context 'authenticated user' do
     before do
@@ -59,7 +59,7 @@ describe '/api/v1/lists', type: :api do
 
         it_behaves_like 'a valid api request'
         it_behaves_like 'a correct payload' do
-          let(:payload) {{ 'name' => list.name }}
+          let(:payload) { { 'name' => list.name } }
         end
       end
 
@@ -82,7 +82,7 @@ describe '/api/v1/lists', type: :api do
 
         it_behaves_like 'a valid api request'
         it_behaves_like 'a correct payload' do
-          let(:payload) {{ 'name' => 'to delete' }}
+          let(:payload) { { 'name' => 'to delete' } }
         end
 
         it 'deletes successfully' do
