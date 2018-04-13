@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'bootsnap', require: false
 gem 'devise'
 gem 'fast_jsonapi'
 gem 'jbuilder', '~> 2.5'
@@ -26,7 +27,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'guard-rspec'
   gem 'rspec-rails'
-  gem 'bootsnap', require: false
 end
 
 group :development do
