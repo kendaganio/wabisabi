@@ -13,7 +13,6 @@
 !/log/.keep
 !/tmp/.keep
 
-config/database.yml
 coverage/
 
 .byebug_history
